@@ -1,0 +1,13 @@
+# logging configuration
+logging:
+  level:
+    tver.wa: 'INFO'
+
+# application port
+server:
+  port: 8089
+
+
+# spring configuration
+#spring:
+#
