@@ -5,7 +5,10 @@ logging:
 
 # application port
 server:
-  port: 8089
+  port: 10901
+
+github:
+  url: 'http://api.github.com'
 
 
 # spring configuration
