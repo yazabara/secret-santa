@@ -6,7 +6,6 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import lombok.RequiredArgsConstructor;
-import tver.wa.model.GithubCommitsData;
 import tver.wa.services.GithubDataService;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
