@@ -13,10 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class GithubConfig {
   private static final String GITHUB_V3_MIME_TYPE = "application/vnd.github.v3+json";
-  private static final String USER_AGENT = "Spring 5 WebClient";
 
   @Value("${github.url}")
   private String url;
+  @Value("${github.token}")
+  private String token;
 
   @Bean
   public WebClient getWebGithubClient() {
@@ -24,7 +25,7 @@ public class GithubConfig {
         .builder()
         .baseUrl(url)
         .defaultHeader(HttpHeaders.CONTENT_TYPE, GITHUB_V3_MIME_TYPE)
-        .defaultHeader(HttpHeaders.USER_AGENT, USER_AGENT)
+        .defaultHeader(HttpHeaders.AUTHORIZATION, "token " + token)
         .filter(logRequest())
         .build();
   }
