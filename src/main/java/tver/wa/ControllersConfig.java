@@ -1,13 +1,18 @@
 package tver.wa;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import tver.wa.model.github.GithubCommitsData;
+import tver.wa.model.secret.santa.User;
+import tver.wa.service.GithubDataService;
+import tver.wa.service.UserService;
 
-import lombok.RequiredArgsConstructor;
-import tver.wa.model.GithubCommitsData;
-import tver.wa.services.GithubDataService;
+import java.util.UUID;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
@@ -17,15 +22,30 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @RequiredArgsConstructor
 public class ControllersConfig {
 
-  private final GithubDataService githubDataService;
+    private final GithubDataService githubDataService;
+    private final UserService userService;
 
-  @Bean
-  RouterFunction<ServerResponse> getEmployeeByIdRoute() {
-    return route(
-        GET("/version"),
-        req -> ok()
-            .body(githubDataService.getLastGithubData(), GithubCommitsData.class)
-    );
-
-  }
+    @Bean
+    RouterFunction<ServerResponse> routes() {
+        return route(
+                GET("/version"),
+                req -> Mono
+                        .justOrEmpty(githubDataService.getLastGithubData())
+                        .flatMap(data -> ok().body(data, GithubCommitsData.class))
+                        .onErrorResume(throwable -> ServerResponse.notFound().build())
+        ).andRoute(
+                GET("/user"),
+                request -> ok().body(
+                        Flux.fromIterable(userService.allUsers()),
+                        User.class
+                )
+        ).andRoute(
+                GET("/user/{uuid}"),
+                request -> Mono
+                        .justOrEmpty(request.pathVariable("uuid"))
+                        .flatMap(s -> Mono.justOrEmpty(userService.getUserBy(UUID.fromString(s))))
+                        .flatMap(user -> ok().body(Mono.justOrEmpty(user), User.class))
+                        .onErrorResume(throwable -> ServerResponse.notFound().build())
+        );
+    }
 }

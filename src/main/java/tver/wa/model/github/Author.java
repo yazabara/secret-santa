@@ -1,6 +1,8 @@
-package tver.wa.model;
+package tver.wa.model.github;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GithubCommitsData {
+public class Author {
 
-  private String sha;
-  private GithubCommit commit;
+  private String name;
+  private String email;
+  private LocalDateTime date;
 }
