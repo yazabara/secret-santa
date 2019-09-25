@@ -1,4 +1,4 @@
-package tver.wa.services;
+package tver.wa.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import reactor.core.publisher.Mono;
-import tver.wa.model.GithubCommitsData;
+import tver.wa.model.github.GithubCommitsData;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
