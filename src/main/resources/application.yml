@@ -9,7 +9,6 @@ server:
 
 github:
   url: 'https://api.github.com'
-  token: '83de0c5c69c57e81f88e1ec27f8ce729313507c9'
 
 
 # spring configuration
