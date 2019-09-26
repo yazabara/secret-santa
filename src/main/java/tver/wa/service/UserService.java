@@ -3,6 +3,7 @@ package tver.wa.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import tver.wa.model.secret.santa.User;
 
 import java.util.Arrays;
@@ -22,7 +23,9 @@ public class UserService {
         return mockData;
     }
 
-    public Flux<User> getUserBy(UUID uuid) {
-        return mockData.filter(user -> user.getUuid().equals(uuid));
+    public Mono<User> getUserBy(UUID uuid) {
+        return mockData
+                .filter(user -> user.getUuid().equals(uuid))
+                .next();
     }
 }

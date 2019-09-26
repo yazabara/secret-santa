@@ -14,7 +14,6 @@ public class GithubConfig {
 
     private static final String GITHUB_V3_MIME_TYPE = "application/vnd.github.v3+json";
 
-
     @Value("${github.url}")
     private String url;
 

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-import tver.wa.exceptions.UserNotFoundException;
 import tver.wa.model.github.GithubCommitsData;
 import tver.wa.model.secret.santa.User;
 import tver.wa.service.GithubDataService;
@@ -34,18 +33,23 @@ public class ControllersConfig {
                         GithubCommitsData.class
                 ).onErrorResume(throwable -> ServerResponse.notFound().build())
         ).andRoute(
-                GET("/all_users"),
+                GET("/user/"),
                 request -> ok().body(
                         userService.allUsers(),
                         User.class
                 )
         ).andRoute(
                 GET("/user/{uuid}"),
-                request -> ok().body(
-                        userService.getUserBy(UUID.fromString(request.pathVariable("uuid")))
-                                .doOnError(error -> Mono.error(new UserNotFoundException("Please give a valid man uuid"))),
-                        User.class
-                )
+                request -> Mono
+                        .justOrEmpty(request.pathVariable("uuid"))
+                        .map(s -> userService.getUserBy(UUID.fromString(s)))
+                        .flatMap(user -> user
+                                // correct responses
+                                .flatMap(u -> ok().body(user, User.class))
+                                .switchIfEmpty(ServerResponse.notFound().build())
+                        )
+                        .onErrorResume(throwable -> ServerResponse.badRequest().build())
+
         );
     }
 }
