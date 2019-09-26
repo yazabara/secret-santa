@@ -1,12 +1,12 @@
-package tver.wa;
+package tver.wa.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tver.wa.exceptions.UserNotFoundException;
 import tver.wa.model.github.GithubCommitsData;
 import tver.wa.model.secret.santa.User;
 import tver.wa.service.GithubDataService;
@@ -29,23 +29,23 @@ public class ControllersConfig {
     RouterFunction<ServerResponse> routes() {
         return route(
                 GET("/version"),
-                req -> Mono
-                        .justOrEmpty(githubDataService.getLastGithubData())
-                        .flatMap(data -> ok().body(data, GithubCommitsData.class))
-                        .onErrorResume(throwable -> ServerResponse.notFound().build())
+                req -> ok().body(
+                        githubDataService.getLastGithubData(),
+                        GithubCommitsData.class
+                ).onErrorResume(throwable -> ServerResponse.notFound().build())
         ).andRoute(
-                GET("/user"),
+                GET("/all_users"),
                 request -> ok().body(
-                        Flux.fromIterable(userService.allUsers()),
+                        userService.allUsers(),
                         User.class
                 )
         ).andRoute(
                 GET("/user/{uuid}"),
-                request -> Mono
-                        .justOrEmpty(request.pathVariable("uuid"))
-                        .flatMap(s -> Mono.justOrEmpty(userService.getUserBy(UUID.fromString(s))))
-                        .flatMap(user -> ok().body(Mono.justOrEmpty(user), User.class))
-                        .onErrorResume(throwable -> ServerResponse.notFound().build())
+                request -> ok().body(
+                        userService.getUserBy(UUID.fromString(request.pathVariable("uuid")))
+                                .doOnError(error -> Mono.error(new UserNotFoundException("Please give a valid man uuid"))),
+                        User.class
+                )
         );
     }
 }

@@ -2,34 +2,27 @@ package tver.wa.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tver.wa.exceptions.UserNotFoundException;
+import reactor.core.publisher.Flux;
 import tver.wa.model.secret.santa.User;
 
-import javax.annotation.PostConstruct;
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.Arrays;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    private List<User> mock_data = new ArrayList<>();
+    private Flux<User> mockData = Flux.fromIterable(
+            Arrays.asList(
+                    new User(UUID.randomUUID(), "Name2"),
+                    new User(UUID.randomUUID(), "Name1")
+            ));
 
-    @PostConstruct
-    public void init() {
-        mock_data = Arrays.asList(new User(UUID.randomUUID(), "Name2"), new User(UUID.randomUUID(), "Name1"));
+    public Flux<User> allUsers() {
+        return mockData;
     }
 
-    public Collection<User> allUsers() {
-        return mock_data;
-    }
-
-    public User getUserBy(UUID uuid) throws UserNotFoundException {
-        return mock_data.stream().filter(user -> user.getUuid().equals(uuid)).findFirst().orElseThrow(new Supplier<RuntimeException>() {
-            @Override
-            public RuntimeException get() {
-                throw new UserNotFoundException("User with uuid = " + uuid + " not found");
-            }
-        });
+    public Flux<User> getUserBy(UUID uuid) {
+        return mockData.filter(user -> user.getUuid().equals(uuid));
     }
 }
