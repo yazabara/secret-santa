@@ -16,3 +16,10 @@ github:
 spring:
   main:
     allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27020
+      database: secret_santa
+      username: santa
+      password: secret_santa
