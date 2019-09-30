@@ -9,8 +9,10 @@ server:
 
 github:
   url: 'https://api.github.com'
+  repo: '/repos/yazabara/secret-santa/commits/master'
 
 
 # spring configuration
-#spring:
-#
+spring:
+  main:
+    allow-bean-definition-overriding: true

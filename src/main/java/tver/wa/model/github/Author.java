@@ -1,20 +1,17 @@
 package tver.wa.model.github;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Author {
+class Author {
 
-  private String name;
-  private String email;
-  private LocalDateTime date;
+    private String name;
+    private String email;
+    private LocalDateTime date;
 }

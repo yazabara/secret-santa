@@ -1,6 +1,5 @@
 package tver.wa.model.github;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class GithubCommitsData {
+public class GithubCommitsData implements GithubVersion {
 
     private String sha;
     private GithubCommit commit;

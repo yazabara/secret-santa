@@ -17,6 +17,9 @@ public class GithubConfig {
     @Value("${github.url}")
     private String url;
 
+    @Value("${github.repo}")
+    private String repository;
+
     @Bean
     public WebClient getWebGithubClient() {
         return WebClient
@@ -25,6 +28,11 @@ public class GithubConfig {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, GITHUB_V3_MIME_TYPE)
                 .filter(logRequest())
                 .build();
+    }
+
+    @Bean
+    public String getGitRepositoryLink() {
+        return repository;
     }
 
     private ExchangeFilterFunction logRequest() {

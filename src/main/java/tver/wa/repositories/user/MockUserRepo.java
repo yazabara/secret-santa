@@ -1,17 +1,17 @@
-package tver.wa.service;
+package tver.wa.repositories.user;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tver.wa.exceptions.UserNotFoundException;
 import tver.wa.model.secret.santa.User;
 
 import java.util.Arrays;
 import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
+@Component
+public class MockUserRepo implements UserRepository {
+    // TODO remove after using real repo
 
     private Flux<User> mockData = Flux.fromIterable(
             Arrays.asList(
@@ -19,13 +19,17 @@ public class UserService {
                     new User(UUID.randomUUID(), "Name1")
             ));
 
-    public Flux<User> allUsers() {
+
+    @Override
+    public Flux<User> findAll() {
         return mockData;
     }
 
-    public Mono<User> getUserBy(UUID uuid) {
+    @Override
+    public Mono<User> findById(UUID uuid) {
         return mockData
                 .filter(user -> user.getUuid().equals(uuid))
-                .next();
+                .next()
+                .switchIfEmpty(Mono.error(new UserNotFoundException("User with this uuid not found")));
     }
 }
