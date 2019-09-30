@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: "santa_mongo"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: santa
+      MONGO_INITDB_ROOT_PASSWORD: secret_santa
+    #default ports from spec: https://docs.mongodb.com/manual/reference/default-mongodb-port/
+    ports:
+      - 27017:27017
+      - 27018:27018
+      - 27019:27019
