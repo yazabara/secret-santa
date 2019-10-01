@@ -7,7 +7,6 @@ import reactor.core.publisher.Flux;
 import tver.wa.model.secret.santa.User;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.UUID;
 
 @Component
@@ -20,19 +19,16 @@ public class UserDataInitializer {
     @PostConstruct
     private void init() {
         // TODO init test users
-
         Flux
-                .fromIterable(
-                        Arrays.asList(
-                                new User(UUID.randomUUID(), "Yaroslav"),
-                                new User(UUID.randomUUID(), "Nikita")
-                        )
+                .just(
+                        new User(UUID.fromString("737caee6-c848-40f4-9191-6bbdd161d302"), "Yaroslav"),
+                        new User(UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad7"), "Nikita")
                 )
                 .subscribe(user -> {
-                    if (repository.findByName(user.getName()).block() == null) {
-                        repository.save(user);
-                        log.debug("Test user was added: " + user);
-                    }
+                    repository
+                            .findById(user.getUuid())
+                            .switchIfEmpty(repository.save(user))
+                            .subscribe(saved -> log.debug("Test user was added: " + saved));
                 });
     }
 }

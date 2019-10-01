@@ -19,7 +19,7 @@ public class UserRoutes {
     RouterFunction<ServerResponse> userApiV1() {
         return route(GET("/v1/users"), handler::allUsers)
                 .andRoute(GET("/v1/users/{uuid}"), handler::getById)
-                .andRoute(DELETE("/v1/users/{uuid}"), handler::getById)
+                .andRoute(DELETE("/v1/users/{uuid}"), handler::deleteUser)
                 .andRoute(PUT("/v1/users/{uuid}"), handler::updateUser)
                 .andRoute(POST("/v1/users/{uuid}"), handler::createUser);
     }

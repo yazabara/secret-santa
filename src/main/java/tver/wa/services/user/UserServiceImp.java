@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tver.wa.exceptions.UserNotFoundException;
 import tver.wa.model.secret.santa.User;
 import tver.wa.repositories.user.UserRepository;
 
@@ -20,6 +21,10 @@ public class UserServiceImp implements UserService {
     }
 
     public Mono<User> getUserBy(UUID uuid) {
-        return userRepository.findById(uuid);
+        return userRepository
+                .findById(uuid)
+                .switchIfEmpty(
+                        Mono.error(new UserNotFoundException("User not found for uuid = " + uuid))
+                );
     }
 }
