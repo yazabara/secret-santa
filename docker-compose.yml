@@ -6,16 +6,8 @@ services:
     image: mongo:latest
     container_name: "santa_mongo"
     restart: always
-    #    volumes:
-    #      - ./data/secret_santa:/data/secret_santa
-    #      - ./data/secret_santa_logs:/data/secret_santa_logs
     #    environment:
-    #      MONGO_DATA_DIR: /data/secret_santa
-    #      MONGO_LOG_DIR: /data/secret_santa_logs
     #      MONGO_ROOT_USERNAME: santa
     #      MONGO_ROOT_PASSWORD: secret_santa
-    #default ports from spec: https://docs.mongodb.com/manual/reference/default-mongodb-port/
     ports:
       - 27020:27017
-      - 27018:27018
-      - 27019:27019
