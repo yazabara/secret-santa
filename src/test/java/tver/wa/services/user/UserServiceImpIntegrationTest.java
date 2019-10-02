@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Mono;
 import tver.wa.exceptions.UserNotFoundException;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class) // Junit4 runner
 @DataMongoTest
 @Import({UserServiceImp.class})
-@Profile("integration")
+@ActiveProfiles("integration")
 public class UserServiceImpTestWithDb {
 
     @Autowired

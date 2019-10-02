@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
-public class UserServiceImpTest {
+public class UserServiceImpUnitTest {
 
     @Mock
     private UserRepository mockRepository;
