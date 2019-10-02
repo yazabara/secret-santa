@@ -15,11 +15,8 @@ github:
 # spring configuration
 spring:
   main:
-    allow-bean-definition-overriding: true
+    banner-mode: 'OFF'
   data:
     mongodb:
       host: localhost
-      port: 27020
-      database: 'secret_santa'
-#      username: 'santa'
-#      password: 'secret_santa'
+      port: 0
