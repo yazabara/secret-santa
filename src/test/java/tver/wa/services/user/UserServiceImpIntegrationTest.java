@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class) // Junit4 runner
 @SpringBootTest // test bean injection
 @ActiveProfiles("test") //configuration file (example: application-test)
-public class UserServiceImpTestWithDb {
+public class UserServiceImpIntegrationTest {
 
     @Autowired
     private UserService userService;
