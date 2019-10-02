@@ -1,0 +1,25 @@
+# logging configuration
+logging:
+  level:
+    tver.wa: 'DEBUG'
+
+# application port
+server:
+  port: 10901
+
+github:
+  url: 'https://api.github.com'
+  repo: '/repos/yazabara/secret-santa/commits/master'
+
+
+# spring configuration
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27020
+      database: 'secret_santa'
+#      username: 'santa'
+#      password: 'secret_santa'
