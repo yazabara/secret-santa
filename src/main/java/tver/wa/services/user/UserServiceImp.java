@@ -27,4 +27,20 @@ public class UserServiceImp implements UserService {
                         Mono.error(new UserNotFoundException("User not found for uuid = " + uuid))
                 );
     }
+
+    public Mono<User> update(User user) {
+        return this.userRepository.save(user);
+    }
+
+    public Mono<User> create(User user) {
+        return this.userRepository.save(user);
+    }
+
+    public Mono<User> delete(UUID uuid) {
+        return this.userRepository
+                .findById(uuid)
+                .flatMap(
+                        user -> this.userRepository.deleteById(uuid).thenReturn(user)
+                );
+    }
 }
