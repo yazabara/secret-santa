@@ -18,5 +18,6 @@ spring:
     banner-mode: 'OFF'
   data:
     mongodb:
+      name: secret-santa-test
       host: localhost
       port: 0

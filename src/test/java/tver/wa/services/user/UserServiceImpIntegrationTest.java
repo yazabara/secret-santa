@@ -16,9 +16,14 @@ import java.util.UUID;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class) // Junit4 runner
-@DataMongoTest
-@Import({UserServiceImp.class})
-@ActiveProfiles("integration")
+@DataMongoTest // Mongo embedded auto configuration
+@Import({UserServiceImp.class}) // enable bean injection for beans in {}
+@ActiveProfiles("integration") // active profiler
+// the same configuration:
+//@RunWith(SpringRunner.class) // Junit4 runner
+//@SpringBootTest // test bean injection
+//@AutoConfigureDataMongo  // Mongo embedded auto configuration
+//@ActiveProfiles("integration") // active profiler
 public class UserServiceImpIntegrationTest {
 
     @Autowired

@@ -29,16 +29,23 @@ test {
 
 dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 //    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     compileOnly 'org.projectlombok:lombok'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // junit 4
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
-    testCompile 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.1'
-    testCompile 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.2.0'
+
+    // testing engine for test running
+    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+    // embedded mongo db for testing
+    testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
 }
