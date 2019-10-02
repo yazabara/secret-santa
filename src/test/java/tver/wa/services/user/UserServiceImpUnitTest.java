@@ -5,13 +5,16 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 import tver.wa.model.secret.santa.User;
 import tver.wa.repositories.user.UserRepository;
 
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.function.Predicate;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
@@ -35,6 +38,17 @@ public class UserServiceImpUnitTest {
 
     @Test
     public void allUsers() {
+        User user = new User(UUID.randomUUID(), "Test");
+        User user2 = new User(UUID.randomUUID(), "Test2");
+        when(mockRepository.findAll()).thenReturn(Flux.fromIterable(Arrays.asList(user, user2)));
+
+        Flux<User> usersList = userService.allUsers();
+        Predicate<User> check = dbUser -> usersList.any(savedUser -> savedUser.equals(dbUser)).block();
+        StepVerifier
+                .create(usersList)
+                .expectNextMatches(check)
+                .expectNextMatches(check)
+                .verifyComplete();
     }
 
     @Test
@@ -43,7 +57,9 @@ public class UserServiceImpUnitTest {
         when(mockRepository.findById(user.getUuid())).thenReturn(Mono.just(user));
         //
         Mono<User> userBy = userService.getUserBy(user.getUuid());
-        assertNotNull("User mono object must be present", userBy);
-        assertEquals("User must be the same with user from repository", userBy.block(), user);
+        StepVerifier
+                .create(userBy)
+                .expectNextMatches(userFromDB -> userFromDB.equals(user))
+                .verifyComplete();
     }
 }
