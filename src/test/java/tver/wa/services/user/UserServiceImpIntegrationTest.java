@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 @DataMongoTest
 @Import({UserServiceImp.class})
 @ActiveProfiles("integration")
-public class UserServiceImpTestWithDb {
+public class UserServiceImpIntegrationTest {
 
     @Autowired
     private UserService userService;
