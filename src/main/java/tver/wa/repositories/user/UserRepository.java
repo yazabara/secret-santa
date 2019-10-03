@@ -14,4 +14,6 @@ public interface UserRepository extends ReactiveMongoRepository<User, UUID> {
     Flux<User> findAllByName(Iterable<String> names);
 
     Mono<User> findByName(String name);
+
+    Flux<User> findByUuidIn(Iterable<UUID> uuids);
 }
