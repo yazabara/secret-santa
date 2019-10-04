@@ -18,10 +18,11 @@ public class EventRoutes {
 
     @Bean
     RouterFunction<ServerResponse> eventApiV1() {
-        return route(GET("/v1/events"), handler::allEvents)
-                .andRoute(GET("/v1/events/{uuid}"), handler::getEventById)
-                .andRoute(DELETE("/v1/events/{uuid}"), handler::deleteEvent)
-                .andRoute(PUT("/v1/events/{uuid}"), handler::updateEvent)
-                .andRoute(POST("/v1/events/{uuid}"), handler::createEvent);
+        String basicUrl = "/v1/events";
+        return route(GET(basicUrl), handler::allEvents)
+                .andRoute(GET(basicUrl.concat("/{uuid}")), handler::getEventById)
+                .andRoute(DELETE(basicUrl.concat("/{uuid}")), handler::deleteEvent)
+                .andRoute(PUT(basicUrl), handler::updateEvent)
+                .andRoute(POST(basicUrl), handler::createEvent);
     }
 }
