@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,5 +16,5 @@ public class Event {
     private UUID uuid;
     private User owner;
     private String ownerToken;
-    private List<User> participants;
+    private List<User> participants = new ArrayList<>();
 }
