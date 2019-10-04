@@ -15,6 +15,9 @@ public class VersionHandler extends BaseRouteHandler {
     private final GithubDataService githubDataService;
 
     public Mono<ServerResponse> getVersion(ServerRequest r) {
-        return defaultJsonResponse(githubDataService.getLastGithubData(), GithubVersion.class);
+        return jsonResponse(
+                githubDataService.getLastGithubData(),
+                GithubVersion.class
+        );
     }
 }

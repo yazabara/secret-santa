@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
+import tver.wa.exceptions.IncorrectTokenException;
 import tver.wa.exceptions.UserNotFoundException;
 
 
@@ -33,6 +34,18 @@ public class GlobalErrorHandler implements WebExceptionHandler {
         }
         if (ex instanceof ResponseStatusException) {
             exchange.getResponse().setStatusCode(((ResponseStatusException) ex).getStatus());
+        }
+        if (ex instanceof IncorrectTokenException) {
+            exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
+            exchange.getResponse().getHeaders().setContentType(MediaType.TEXT_PLAIN);
+            return exchange
+                    .getResponse()
+                    .writeWith(
+                            createResponseBody(
+                                    exchange.getResponse().bufferFactory(),
+                                    ex.getLocalizedMessage()
+                            )
+                    );
         }
         return exchange.getResponse().setComplete();
     }
