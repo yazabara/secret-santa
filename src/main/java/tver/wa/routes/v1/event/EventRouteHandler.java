@@ -33,20 +33,17 @@ public class EventRouteHandler extends BaseRouteHandler {
     }
 
     Mono<ServerResponse> updateEvent(ServerRequest serverRequest) {
-        // Провалидировать что корректный uuid
-        // Получить эвент по этому id
-        // Проверить что ownerToken принадлежит этому эвенту если ок то делаем то что нужно
         return jsonResponse(
                 eventService.create(serverRequest.bodyToMono(Event.class)),
-                Event.class
+                Event.class,
+                new EventRequestValidator(serverRequest)
         );
     }
 
     Mono<ServerResponse> getEventById(ServerRequest serverRequest) {
         return jsonResponse(
                 eventService.getById(uuid(serverRequest)),
-                Event.class,
-                new EventRequestValidator(serverRequest.headers().asHttpHeaders().getFirst(OWNER_TOKEN_HEADER))
+                Event.class
         );
     }
 }

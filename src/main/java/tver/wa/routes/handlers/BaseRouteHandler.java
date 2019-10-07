@@ -12,8 +12,6 @@ import java.util.function.Function;
 
 public class BaseRouteHandler {
 
-    protected static final String OWNER_TOKEN_HEADER = "OWNER_TOKEN_HEADER";
-
     protected UUID uuid(ServerRequest request) {
         return UUID.fromString(request.pathVariable("uuid"));
     }

@@ -1,4 +1,4 @@
-package tver.wa.repositories.user;
+package tver.wa.repositories;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 import tver.wa.model.secret.santa.Event;
 import tver.wa.model.secret.santa.User;
 import tver.wa.repositories.event.EventRepository;
+import tver.wa.repositories.user.UserRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class UserDataInitializer {
+public class MockDataInitializer {
 
     private final UserRepository repository;
     private final EventRepository eventRepository;
@@ -31,12 +32,10 @@ public class UserDataInitializer {
                         firstUser,
                         secondUser
                 )
-                .subscribe(user -> {
-                    repository
-                            .findById(user.getUuid())
-                            .switchIfEmpty(repository.save(user))
-                            .subscribe(saved -> log.debug("Test user was added: " + saved));
-                });
+                .subscribe(user -> repository
+                        .findById(user.getUuid())
+                        .switchIfEmpty(repository.save(user))
+                        .subscribe(saved -> log.debug("Test user was added: " + saved)));
         Mono
                 .just(new Event(
                         UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad8"),
@@ -45,10 +44,10 @@ public class UserDataInitializer {
                         Arrays.asList(firstUser, secondUser)
                 ))
                 .subscribe(
-                event -> eventRepository
-                        .findById(event.getUuid())
-                        .switchIfEmpty(eventRepository.save(event))
-                        .subscribe(savedEvent -> log.debug("Init test event data" + event))
-        );
+                        event -> eventRepository
+                                .findById(event.getUuid())
+                                .switchIfEmpty(eventRepository.save(event))
+                                .subscribe(savedEvent -> log.debug("Init test event data" + event))
+                );
     }
 }
