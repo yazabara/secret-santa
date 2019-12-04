@@ -16,11 +16,17 @@ class UserRouteHandler extends BaseRouteHandler {
     private final UserService userService;
 
     Mono<ServerResponse> getById(ServerRequest r) {
-        return defaultJsonResponse(userService.getUserBy(uuid(r)), User.class);
+        return jsonResponse(
+                userService.getUserBy(uuid(r)),
+                User.class
+        );
     }
 
     Mono<ServerResponse> allUsers(ServerRequest r) {
-        return defaultJsonResponse(userService.allUsers(), User.class);
+        return jsonResponse(
+                userService.allUsers(),
+                User.class
+        );
     }
 
     Mono<ServerResponse> createUser(ServerRequest serverRequest) {

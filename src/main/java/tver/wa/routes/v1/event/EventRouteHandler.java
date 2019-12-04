@@ -18,28 +18,32 @@ public class EventRouteHandler extends BaseRouteHandler {
     private final EventService eventService;
 
     Mono<ServerResponse> allEvents(ServerRequest serverRequest) {
-        return defaultJsonResponse(eventService.getAll(), Event.class);
+        return jsonResponse(eventService.getAll(), Event.class);
     }
 
     Mono<ServerResponse> createEvent(ServerRequest serverRequest) {
-        return defaultJsonResponse(
+        return jsonResponse(
                 eventService.create(serverRequest.bodyToMono(Event.class)),
                 Event.class
         );
     }
 
     Mono<ServerResponse> deleteEvent(ServerRequest serverRequest) {
-        return defaultJsonResponse(eventService.delete(uuid(serverRequest)), UUID.class);
+        return jsonResponse(eventService.delete(uuid(serverRequest)), UUID.class);
     }
 
     Mono<ServerResponse> updateEvent(ServerRequest serverRequest) {
-        return defaultJsonResponse(
+        return jsonResponse(
                 eventService.create(serverRequest.bodyToMono(Event.class)),
-                Event.class
+                Event.class,
+                new EventRequestValidator(serverRequest)
         );
     }
 
     Mono<ServerResponse> getEventById(ServerRequest serverRequest) {
-        return defaultJsonResponse(eventService.getById(uuid(serverRequest)), Event.class);
+        return jsonResponse(
+                eventService.getById(uuid(serverRequest)),
+                Event.class
+        );
     }
 }
