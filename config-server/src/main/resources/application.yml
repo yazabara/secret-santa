@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configurations
+  profiles:
+    active: native
+  security:
+    user:
+      name: ${CONFIG_SERVICE_USER}
+      password: ${CONFIG_SERVICE_PASS}
+
+server:
+  port: 8888

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: santa-api-test
+  profiles:
+    active: test
+  cloud:
+    config:
+      discovery:
+        enabled: false
+      enabled: false
+eureka:
+  client:
+    enabled: false

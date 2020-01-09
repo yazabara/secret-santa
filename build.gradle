@@ -1,51 +1,12 @@
-plugins {
-    id 'org.springframework.boot' version '2.1.7.RELEASE'
-    id 'java'
+allprojects {
+    apply plugin: 'java'
+    group = 'tver.wa'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '1.8'
 }
 
-apply plugin: 'io.spring.dependency-management'
-
-group = 'tver.wa'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
+subprojects {
+    repositories {
+        mavenCentral()
     }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
-test {
-    useJUnitPlatform()
-}
-
-dependencies {
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-mail'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-    compileOnly 'org.projectlombok:lombok'
-
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    // junit 4
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
-
-    // testing engine for test running
-    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
-    // embedded mongo db for testing
-    testCompile 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.2.0'
 }
