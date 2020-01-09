@@ -38,8 +38,8 @@ public class UserServiceImpUnitTest {
 
     @Test
     public void allUsers() {
-        User user = new User(UUID.randomUUID(), "Test");
-        User user2 = new User(UUID.randomUUID(), "Test2");
+        User user = User.builder().uuid(UUID.randomUUID()).name("Test1").build();
+        User user2 = User.builder().uuid(UUID.randomUUID()).name("Test2").build();
         when(mockRepository.findAll()).thenReturn(Flux.fromIterable(Arrays.asList(user, user2)));
 
         Flux<User> usersList = userService.allUsers();
@@ -53,7 +53,7 @@ public class UserServiceImpUnitTest {
 
     @Test
     public void getUserBy() {
-        User user = new User(UUID.randomUUID(), "Test");
+        User user = User.builder().uuid(UUID.randomUUID()).name("Test1").build();
         when(mockRepository.findById(user.getUuid())).thenReturn(Mono.just(user));
         //
         Mono<User> userBy = userService.getUserBy(user.getUuid());

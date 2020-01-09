@@ -32,7 +32,7 @@ public class UserServiceImpIntegrationTest {
 
     @Test
     public void saveMustWorkCorrect() {
-        User newUser = new User(UUID.randomUUID(), "Test user");
+        User newUser = User.builder().uuid(UUID.randomUUID()).name("Test user").build();
         Mono<User> testUser = userService.create(newUser);
         StepVerifier
                 .create(testUser)

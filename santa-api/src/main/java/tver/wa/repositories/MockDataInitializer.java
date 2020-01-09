@@ -25,8 +25,15 @@ public class MockDataInitializer {
     @PostConstruct
     private void init() {
         // TODO init test users
-        User firstUser = new User(UUID.fromString("737caee6-c848-40f4-9191-6bbdd161d302"), "Yaroslav");
-        User secondUser = new User(UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad7"), "Nikita");
+        User firstUser = User.builder()
+                .uuid(UUID.fromString("737caee6-c848-40f4-9191-6bbdd161d302"))
+                .name("Yaroslav")
+                .build();
+
+        User secondUser = User.builder()
+                .uuid(UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad7"))
+                .name("Nikita")
+                .build();
         Flux
                 .just(
                         firstUser,
@@ -37,12 +44,15 @@ public class MockDataInitializer {
                         .switchIfEmpty(repository.save(user))
                         .subscribe(saved -> log.debug("Test user was added: " + saved)));
         Mono
-                .just(new Event(
-                        UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad8"),
-                        firstUser,
-                        "Test token",
-                        Arrays.asList(firstUser, secondUser)
-                ))
+                .just(Event
+                        .builder()
+                        .description("Event description")
+                        .uuid(UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad8"))
+                        .owner(firstUser)
+                        .ownerToken("owner_token")
+                        .participants(Arrays.asList(firstUser, secondUser))
+                        .build()
+                )
                 .subscribe(
                         event -> eventRepository
                                 .findById(event.getUuid())

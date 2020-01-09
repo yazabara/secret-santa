@@ -29,7 +29,7 @@ public class EventRouteHandler extends BaseRouteHandler {
     }
 
     Mono<ServerResponse> deleteEvent(ServerRequest serverRequest) {
-        return jsonResponse(eventService.delete(uuid(serverRequest)), UUID.class);
+        return jsonResponse(eventService.delete(uuid(serverRequest)), Event.class);
     }
 
     Mono<ServerResponse> updateEvent(ServerRequest serverRequest) {

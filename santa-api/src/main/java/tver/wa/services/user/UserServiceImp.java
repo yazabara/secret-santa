@@ -1,6 +1,7 @@
 package tver.wa.services.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,6 +11,7 @@ import tver.wa.repositories.user.UserRepository;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImp implements UserService {
@@ -29,18 +31,19 @@ public class UserServiceImp implements UserService {
     }
 
     public Mono<User> update(User user) {
-        return this.userRepository.save(user);
+        return getUserBy(user.getUuid())
+                .flatMap(u -> userRepository.save(user));
     }
 
     public Mono<User> create(User user) {
-        return this.userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public Mono<User> delete(UUID uuid) {
-        return this.userRepository
-                .findById(uuid)
-                .flatMap(
-                        user -> this.userRepository.deleteById(uuid).thenReturn(user)
-                );
+        return getUserBy(uuid)
+                .flatMap(user -> {
+                    log.info(String.format("Event with uuid = %s will be deleted", uuid));
+                    return userRepository.delete(user).thenReturn(user);
+                });
     }
 }
