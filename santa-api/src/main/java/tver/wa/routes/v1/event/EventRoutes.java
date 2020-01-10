@@ -22,7 +22,7 @@ public class EventRoutes {
         return route(GET(basicUrl), handler::allEvents)
                 .andRoute(GET(basicUrl.concat("/{uuid}")), handler::getEventById)
                 .andRoute(DELETE(basicUrl.concat("/{uuid}")), handler::deleteEvent)
-                .andRoute(PUT(basicUrl), handler::updateEvent)
-                .andRoute(POST(basicUrl), handler::createEvent);
+                .andRoute(POST(basicUrl.concat("/{uuid}")), handler::updateEvent)
+                .andRoute(PUT(basicUrl), handler::createEvent);
     }
 }

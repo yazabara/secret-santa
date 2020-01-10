@@ -12,6 +12,7 @@ import tver.wa.repositories.user.UserRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.UUID;
 
 @Component
@@ -43,14 +44,18 @@ public class MockDataInitializer {
                         .findById(user.getUuid())
                         .switchIfEmpty(repository.save(user))
                         .subscribe(saved -> log.debug("Test user was added: " + saved)));
+
+        eventRepository.deleteAll();
         Mono
                 .just(Event
                         .builder()
+                        .creator(firstUser.getUuid())
+                        .start(new Date())
+                        .end(new Date())
                         .description("Event description")
                         .uuid(UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad8"))
-                        .owner(firstUser)
                         .ownerToken("owner_token")
-                        .participants(Arrays.asList(firstUser, secondUser))
+                        .participants(Arrays.asList(firstUser.getUuid(), secondUser.getUuid()))
                         .build()
                 )
                 .subscribe(

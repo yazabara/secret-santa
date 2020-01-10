@@ -1,6 +1,7 @@
 package tver.wa.routes.v1.event;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -9,8 +10,7 @@ import tver.wa.model.secret.santa.Event;
 import tver.wa.routes.handlers.BaseRouteHandler;
 import tver.wa.services.event.EventService;
 
-import java.util.UUID;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EventRouteHandler extends BaseRouteHandler {
@@ -34,7 +34,7 @@ public class EventRouteHandler extends BaseRouteHandler {
 
     Mono<ServerResponse> updateEvent(ServerRequest serverRequest) {
         return jsonResponse(
-                eventService.create(serverRequest.bodyToMono(Event.class)),
+                eventService.update(uuid(serverRequest), serverRequest.bodyToMono(Event.class)),
                 Event.class,
                 new EventRequestValidator(serverRequest)
         );

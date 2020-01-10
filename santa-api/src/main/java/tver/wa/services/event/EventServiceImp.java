@@ -38,9 +38,19 @@ public class EventServiceImp implements EventService {
     }
 
     @Override
-    public Mono<Event> update(Event event) {
-        return getById(event.getUuid())
-                .flatMap(e -> eventRepository.save(event));
+    public Mono<Event> update(UUID uuid, Mono<Event> event) {
+        return getById(uuid)
+                .map(old -> {
+                    Event newEvent = event.block();
+                    return newEvent == null ? old : old.toBuilder()
+                            .ownerToken(newEvent.getOwnerToken())
+                            .description(newEvent.getDescription())
+                            .start(newEvent.getStart())
+                            .end(newEvent.getEnd())
+                            .participants(newEvent.getParticipants())
+                            .build();
+                })
+                .flatMap(eventRepository::save);
     }
 
     @Override

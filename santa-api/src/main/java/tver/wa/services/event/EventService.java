@@ -16,7 +16,7 @@ public interface EventService {
 
     Mono<Event> create(Mono<Event> event);
 
-    Mono<Event> update(Event event);
+    Mono<Event> update(UUID uuid, Mono<Event> event);
 
     Mono<Event> delete(UUID uuid);
 }
