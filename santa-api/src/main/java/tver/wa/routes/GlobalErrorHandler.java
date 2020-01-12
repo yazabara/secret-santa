@@ -11,7 +11,7 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 import tver.wa.exceptions.IncorrectTokenException;
-import tver.wa.exceptions.UserNotFoundException;
+import tver.wa.exceptions.ClientNotFoundException;
 
 
 @Component
@@ -20,7 +20,7 @@ public class GlobalErrorHandler implements WebExceptionHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-        if (ex instanceof UserNotFoundException || ex instanceof IllegalArgumentException) {
+        if (ex instanceof ClientNotFoundException || ex instanceof IllegalArgumentException) {
             exchange.getResponse().setStatusCode(HttpStatus.NOT_FOUND);
             exchange.getResponse().getHeaders().setContentType(MediaType.TEXT_PLAIN);
             return exchange

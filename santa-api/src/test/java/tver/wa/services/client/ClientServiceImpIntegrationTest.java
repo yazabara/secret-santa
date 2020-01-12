@@ -1,4 +1,4 @@
-package tver.wa.services.user;
+package tver.wa.services.client;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-import tver.wa.exceptions.UserNotFoundException;
+import tver.wa.exceptions.ClientNotFoundException;
 import tver.wa.model.secret.santa.Client;
 
 import java.util.UUID;
@@ -17,15 +17,15 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class) // Junit4 runner
 @DataMongoTest // Mongo embedded auto configuration
-@Import({UserServiceImp.class}) // enable bean injection for beans in {}
+@Import({ClientServiceImp.class}) // enable bean injection for beans in {}
 public class ClientServiceImpIntegrationTest {
 
     @Autowired
-    private UserService userService;
+    private ClientService clientService;
 
-    @Test(expected = UserNotFoundException.class)
+    @Test(expected = ClientNotFoundException.class)
     public void getUserByMustWorkCorrect() {
-        Mono<Client> userBy = userService.getById(UUID.randomUUID());
+        Mono<Client> userBy = clientService.getById(UUID.randomUUID());
         assertNotNull("User mono object must be present", userBy);
         userBy.block(); //expected UserNotFoundException
     }
@@ -33,7 +33,7 @@ public class ClientServiceImpIntegrationTest {
     @Test
     public void saveMustWorkCorrect() {
         Client newClient = Client.builder().uuid(UUID.randomUUID()).name("Test user").build();
-        Mono<Client> testUser = userService.create(newClient);
+        Mono<Client> testUser = clientService.create(newClient);
         StepVerifier
                 .create(testUser)
                 .expectNextMatches(saved -> saved.getName().equals(newClient.getName()))

@@ -1,4 +1,4 @@
-package tver.wa.services.user;
+package tver.wa.services.client;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class ClientServiceImpUnitTest {
     private ClientRepository mockRepository;
 
     @InjectMocks
-    private UserServiceImp userService;
+    private ClientServiceImp userService;
 
     @Before
     public void setUp() {

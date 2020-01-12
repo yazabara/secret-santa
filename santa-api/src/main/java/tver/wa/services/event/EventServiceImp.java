@@ -43,7 +43,6 @@ public class EventServiceImp implements EventService {
                 .map(old -> {
                     Event newEvent = event.block();
                     return newEvent == null ? old : old.toBuilder()
-                            .ownerToken(newEvent.getOwnerToken())
                             .description(newEvent.getDescription())
                             .start(newEvent.getStart())
                             .end(newEvent.getEnd())

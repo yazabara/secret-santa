@@ -2,13 +2,9 @@ package tver.wa.routes.handlers;
 
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.UUID;
-import java.util.function.Function;
 
 public class BaseRouteHandler {
 

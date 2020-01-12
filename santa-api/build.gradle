@@ -12,7 +12,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    compileOnly 'org.projectlombok:lombok'
+    compile 'org.apache.commons:commons-lang3'
+
+    compile 'org.projectlombok:lombok'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'

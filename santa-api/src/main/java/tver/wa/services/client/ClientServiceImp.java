@@ -1,11 +1,11 @@
-package tver.wa.services.user;
+package tver.wa.services.client;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import tver.wa.exceptions.UserNotFoundException;
+import tver.wa.exceptions.ClientNotFoundException;
 import tver.wa.model.secret.santa.Client;
 import tver.wa.repositories.client.ClientRepository;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImp implements UserService {
+public class ClientServiceImp implements ClientService {
 
     private final ClientRepository clientRepository;
 
@@ -26,8 +26,17 @@ public class UserServiceImp implements UserService {
         return clientRepository
                 .findById(uuid)
                 .switchIfEmpty(
-                        Mono.error(new UserNotFoundException("User not found for uuid = " + uuid))
+                        Mono.error(new ClientNotFoundException("Client not found for uuid = " + uuid))
                 );
+    }
+
+    @Override
+    public Mono<Client> getByPublicKey(String publicKey) {
+        return clientRepository
+                .findByPublicKey(publicKey)
+                .switchIfEmpty(
+                        Mono.error(new ClientNotFoundException("Client not found for public key = " + publicKey))
+                ).next();
     }
 
     public Mono<Client> update(Client client) {

@@ -13,6 +13,8 @@ public interface ClientRepository extends ReactiveMongoRepository<Client, UUID> 
 
     Flux<Client> findAllByName(Iterable<String> names);
 
+    Flux<Client> findByPublicKey(String publicKey);
+
     Mono<Client> findByName(String name);
 
     Flux<Client> findByUuidIn(Iterable<UUID> uuids);

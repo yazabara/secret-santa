@@ -7,24 +7,26 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import tver.wa.model.secret.santa.Client;
 import tver.wa.routes.handlers.BaseRouteHandler;
-import tver.wa.services.user.UserService;
+import tver.wa.services.client.ClientService;
+
+import static tver.wa.routes.utils.ServerRequestUtils.uuid;
 
 @Component
 @RequiredArgsConstructor
 class ClientRouteHandler extends BaseRouteHandler {
 
-    private final UserService userService;
+    private final ClientService clientService;
 
     Mono<ServerResponse> getById(ServerRequest r) {
         return jsonResponse(
-                userService.getById(uuid(r)),
+                clientService.getById(uuid(r)),
                 Client.class
         );
     }
 
     Mono<ServerResponse> all(ServerRequest r) {
         return jsonResponse(
-                userService.all(),
+                clientService.all(),
                 Client.class
         );
     }
