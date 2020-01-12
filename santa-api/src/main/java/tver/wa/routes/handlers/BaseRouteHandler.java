@@ -12,27 +12,9 @@ import java.util.function.Function;
 
 public class BaseRouteHandler {
 
-    protected UUID uuid(ServerRequest request) {
-        return UUID.fromString(request.pathVariable("uuid"));
-    }
-
-    protected static <T> Mono<ServerResponse> jsonResponse(Mono<T> monoObject, Class<T> tClass, Function<T, T> validator) {
-        return defaultJsonResponse(
-                monoObject.map(validator),
-                tClass
-        );
-    }
-
     protected static <T> Mono<ServerResponse> jsonResponse(Mono<T> monoObject, Class<T> tClass) {
         return defaultJsonResponse(
                 monoObject,
-                tClass
-        );
-    }
-
-    protected static <T> Mono<ServerResponse> jsonResponse(Flux<T> monoObject, Class<T> tClass, Function<T, T> validator) {
-        return defaultJsonResponse(
-                monoObject.map(validator),
                 tClass
         );
     }

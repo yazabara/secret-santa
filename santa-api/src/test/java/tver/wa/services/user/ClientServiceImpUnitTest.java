@@ -8,8 +8,8 @@ import org.mockito.MockitoAnnotations;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-import tver.wa.model.secret.santa.User;
-import tver.wa.repositories.user.UserRepository;
+import tver.wa.model.secret.santa.Client;
+import tver.wa.repositories.client.ClientRepository;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -18,10 +18,10 @@ import java.util.function.Predicate;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
-public class UserServiceImpUnitTest {
+public class ClientServiceImpUnitTest {
 
     @Mock
-    private UserRepository mockRepository;
+    private ClientRepository mockRepository;
 
     @InjectMocks
     private UserServiceImp userService;
@@ -38,12 +38,12 @@ public class UserServiceImpUnitTest {
 
     @Test
     public void allUsers() {
-        User user = User.builder().uuid(UUID.randomUUID()).name("Test1").build();
-        User user2 = User.builder().uuid(UUID.randomUUID()).name("Test2").build();
-        when(mockRepository.findAll()).thenReturn(Flux.fromIterable(Arrays.asList(user, user2)));
+        Client client = Client.builder().uuid(UUID.randomUUID()).name("Test1").build();
+        Client client2 = Client.builder().uuid(UUID.randomUUID()).name("Test2").build();
+        when(mockRepository.findAll()).thenReturn(Flux.fromIterable(Arrays.asList(client, client2)));
 
-        Flux<User> usersList = userService.allUsers();
-        Predicate<User> check = dbUser -> usersList.any(savedUser -> savedUser.equals(dbUser)).block();
+        Flux<Client> usersList = userService.all();
+        Predicate<Client> check = dbUser -> usersList.any(savedUser -> savedUser.equals(dbUser)).block();
         StepVerifier
                 .create(usersList)
                 .expectNextMatches(check)
@@ -53,13 +53,13 @@ public class UserServiceImpUnitTest {
 
     @Test
     public void getUserBy() {
-        User user = User.builder().uuid(UUID.randomUUID()).name("Test1").build();
-        when(mockRepository.findById(user.getUuid())).thenReturn(Mono.just(user));
+        Client client = Client.builder().uuid(UUID.randomUUID()).name("Test1").build();
+        when(mockRepository.findById(client.getUuid())).thenReturn(Mono.just(client));
         //
-        Mono<User> userBy = userService.getUserBy(user.getUuid());
+        Mono<Client> userBy = userService.getById(client.getUuid());
         StepVerifier
                 .create(userBy)
-                .expectNextMatches(userFromDB -> userFromDB.equals(user))
+                .expectNextMatches(userFromDB -> userFromDB.equals(client))
                 .verifyComplete();
     }
 }

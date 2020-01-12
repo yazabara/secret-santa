@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tver.wa.model.secret.santa.Client;
 import tver.wa.model.secret.santa.Event;
-import tver.wa.model.secret.santa.User;
+import tver.wa.repositories.client.ClientRepository;
 import tver.wa.repositories.event.EventRepository;
-import tver.wa.repositories.user.UserRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
@@ -18,27 +18,30 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+//TODO not prod. remove
 public class MockDataInitializer {
 
-    private final UserRepository repository;
+    private final ClientRepository repository;
     private final EventRepository eventRepository;
 
     @PostConstruct
     private void init() {
         // TODO init test users
-        User firstUser = User.builder()
+        Client firstClient = Client.builder()
                 .uuid(UUID.fromString("737caee6-c848-40f4-9191-6bbdd161d302"))
-                .name("Yaroslav")
+                .name("Yaroslav's Client")
+                .secretKey("secret")
+                .publicKey("public")
                 .build();
 
-        User secondUser = User.builder()
+        Client secondClient = Client.builder()
                 .uuid(UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad7"))
-                .name("Nikita")
+                .name("Nikita's Client")
                 .build();
         Flux
                 .just(
-                        firstUser,
-                        secondUser
+                        firstClient,
+                        secondClient
                 )
                 .subscribe(user -> repository
                         .findById(user.getUuid())
@@ -49,13 +52,12 @@ public class MockDataInitializer {
         Mono
                 .just(Event
                         .builder()
-                        .creator(firstUser.getUuid())
+                        .creator(firstClient.getUuid())
                         .start(new Date())
                         .end(new Date())
                         .description("Event description")
                         .uuid(UUID.fromString("afca25b2-5b84-45dd-ada0-41585e79aad8"))
-                        .ownerToken("owner_token")
-                        .participants(Arrays.asList(firstUser.getUuid(), secondUser.getUuid()))
+                        .participants(Arrays.asList(firstClient.getUuid(), secondClient.getUuid()))
                         .build()
                 )
                 .subscribe(

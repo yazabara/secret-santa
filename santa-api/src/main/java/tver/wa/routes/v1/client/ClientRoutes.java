@@ -1,4 +1,4 @@
-package tver.wa.routes.v1.user;
+package tver.wa.routes.v1.client;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,16 +11,16 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 
 @Configuration
 @RequiredArgsConstructor
-public class UserRoutes {
+public class ClientRoutes {
 
-    private final UserRouteHandler handler;
+    private final ClientRouteHandler handler;
 
     @Bean
     RouterFunction<ServerResponse> userApiV1() {
-        return route(GET("/v1/users"), handler::allUsers)
-                .andRoute(GET("/v1/users/{uuid}"), handler::getById)
-                .andRoute(DELETE("/v1/users/{uuid}"), handler::deleteUser)
-                .andRoute(PUT("/v1/users/{uuid}"), handler::updateUser)
-                .andRoute(POST("/v1/users/{uuid}"), handler::createUser);
+        return route(GET("/v1/clients"), handler::all)
+                .andRoute(GET("/v1/clients/{uuid}"), handler::getById)
+                .andRoute(DELETE("/v1/clients/{uuid}"), handler::delete)
+                .andRoute(PUT("/v1/clients/{uuid}"), handler::update)
+                .andRoute(POST("/v1/clients/{uuid}"), handler::create);
     }
 }

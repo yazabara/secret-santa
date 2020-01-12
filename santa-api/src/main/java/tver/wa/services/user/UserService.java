@@ -2,19 +2,19 @@ package tver.wa.services.user;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import tver.wa.model.secret.santa.User;
+import tver.wa.model.secret.santa.Client;
 
 import java.util.UUID;
 
 public interface UserService {
 
-    Flux<User> allUsers();
+    Flux<Client> all();
 
-    Mono<User> getUserBy(UUID uuid);
+    Mono<Client> getById(UUID uuid);
 
-    Mono<User> update(User user);
+    Mono<Client> update(Client client);
 
-    Mono<User> create(User user);
+    Mono<Client> create(Client client);
 
-    Mono<User> delete(UUID uuid);
+    Mono<Client> delete(UUID uuid);
 }

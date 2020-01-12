@@ -10,6 +10,8 @@ import tver.wa.model.secret.santa.Event;
 import tver.wa.routes.handlers.BaseRouteHandler;
 import tver.wa.services.event.EventService;
 
+import static tver.wa.routes.utils.ServerRequestUtils.uuid;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -35,8 +37,7 @@ public class EventRouteHandler extends BaseRouteHandler {
     Mono<ServerResponse> updateEvent(ServerRequest serverRequest) {
         return jsonResponse(
                 eventService.update(uuid(serverRequest), serverRequest.bodyToMono(Event.class)),
-                Event.class,
-                new EventRequestValidator(serverRequest)
+                Event.class
         );
     }
 

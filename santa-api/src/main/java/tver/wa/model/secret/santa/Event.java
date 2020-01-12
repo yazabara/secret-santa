@@ -20,13 +20,9 @@ public class Event {
     @Id
     private UUID uuid;
     /**
-     * Creator user uuid (can't be changed by edit operation)
+     * Creator client uuid (can't be changed by edit operation)
      */
     private UUID creator;
-    /**
-     * Crud Operations token - possibility to do something with Event (CRUD operations)
-     */
-    private String ownerToken;
     /**
      * Start event date
      */

@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static junit.framework.TestCase.assertEquals;
 
 @SpringBootTest
-public class UserRoutesTest {
+public class ClientRoutesTest {
 
     @Test
     public void testSome() {
