@@ -13,6 +13,16 @@ services:
     #      MONGO_ROOT_PASSWORD: secret_santa
     ports:
       - 27020:27017
+
+  consul:
+    image: consul:1.6.2
+    container_name: "consul_server"
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+    ports:
+      - 8500:8500
+      - 8300:8300
+
 volumes:
   secret-santa:
     driver: local
