@@ -6,7 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Data
@@ -19,7 +19,7 @@ public class Client {
      * Unique client uuid
      */
     @Id
-    @NotEmpty(message = "Client UUID can't be empty")
+    @NotNull(message = "Client UUID can't be empty")
     private UUID uuid;
     /**
      * Just client name

@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import tver.wa.exceptions.ClientNotFoundException;
 import tver.wa.model.secret.santa.Client;
+import tver.wa.repositories.UUIDGenerator;
 
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class) // Junit4 runner
 @DataMongoTest // Mongo embedded auto configuration
-@Import({ClientServiceImp.class}) // enable bean injection for beans in {}
+@Import({ClientServiceImp.class, UUIDGenerator.class}) // enable bean injection for beans in {}
 public class ClientServiceImpIntegrationTest {
 
     @Autowired
@@ -33,7 +34,7 @@ public class ClientServiceImpIntegrationTest {
     @Test
     public void saveMustWorkCorrect() {
         Client newClient = Client.builder().uuid(UUID.randomUUID()).name("Test user").build();
-        Mono<Client> testUser = clientService.create(newClient);
+        Mono<Client> testUser = clientService.create(Mono.just(newClient));
         StepVerifier
                 .create(testUser)
                 .expectNextMatches(saved -> saved.getName().equals(newClient.getName()))

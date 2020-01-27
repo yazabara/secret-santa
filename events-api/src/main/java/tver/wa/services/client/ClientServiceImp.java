@@ -7,6 +7,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tver.wa.exceptions.ClientNotFoundException;
 import tver.wa.model.secret.santa.Client;
+import tver.wa.repositories.UUIDGenerator;
 import tver.wa.repositories.client.ClientRepository;
 
 import java.util.UUID;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClientServiceImp implements ClientService {
 
+    private final UUIDGenerator uuidGenerator;
     private final ClientRepository clientRepository;
 
     public Flux<Client> all() {
@@ -39,13 +41,31 @@ public class ClientServiceImp implements ClientService {
                 ).next();
     }
 
-    public Mono<Client> update(Client client) {
-        return getById(client.getUuid())
-                .flatMap(u -> clientRepository.save(client));
+    public Mono<Client> update(UUID uuid, Mono<Client> client) {
+        return getById(uuid)
+                .map(old -> {
+                    Client newClient = client.block();
+                    return newClient == null ? old : old.toBuilder()
+                            .name(old.getName())
+                            .build();
+                })
+                .flatMap(entity -> {
+                    log.info(String.format("Client with uuid = %s will be updated", uuid));
+                    return clientRepository.save(entity);
+                });
     }
 
-    public Mono<Client> create(Client client) {
-        return clientRepository.save(client);
+    public Mono<Client> create(Mono<Client> client) {
+        return client
+                .map(c -> c
+                        .toBuilder()
+                        .uuid(uuidGenerator.generate())
+                        .build()
+                )
+                .flatMap(entity -> {
+                    log.info(String.format("New client with uuid = %s will be created", entity.getUuid()));
+                    return clientRepository.save(entity);
+                });
     }
 
     public Mono<Client> delete(UUID uuid) {

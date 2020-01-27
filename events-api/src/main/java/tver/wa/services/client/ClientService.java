@@ -14,9 +14,9 @@ public interface ClientService {
 
     Mono<Client> getByPublicKey(String publicKey);
 
-    Mono<Client> update(Client client);
+    Mono<Client> update(UUID uuid, Mono<Client> client);
 
-    Mono<Client> create(Client client);
+    Mono<Client> create(Mono<Client> client);
 
     Mono<Client> delete(UUID uuid);
 }

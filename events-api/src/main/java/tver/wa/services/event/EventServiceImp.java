@@ -48,7 +48,7 @@ public class EventServiceImp implements EventService {
                 )
                 .next()
                 .flatMap(entity -> {
-                    log.info(String.format("New event with uuid = %s will be created", entity));
+                    log.info(String.format("New event with uuid = %s will be created", entity.getUuid()));
                     return eventRepository.save(entity);
                 });
     }
