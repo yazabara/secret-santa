@@ -4,15 +4,16 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import tver.wa.services.security.ClientRoles;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
 @Document(value = "Client")
 @Builder(toBuilder = true)
-// TODO validation doesn't work
 public class Client {
 
     /**
@@ -36,4 +37,9 @@ public class Client {
      */
     @NotBlank(message = "Client's secret key is necessary")
     private String secretKey;
+
+    /**
+     * Client roles.
+     */
+    private Set<ClientRoles> roles;
 }

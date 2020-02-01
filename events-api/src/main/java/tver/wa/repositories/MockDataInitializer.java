@@ -9,10 +9,13 @@ import tver.wa.model.secret.santa.Client;
 import tver.wa.model.secret.santa.Event;
 import tver.wa.repositories.client.ClientRepository;
 import tver.wa.repositories.event.EventRepository;
+import tver.wa.services.security.ClientRoles;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 
 @Component
 @RequiredArgsConstructor
@@ -32,11 +35,15 @@ public class MockDataInitializer {
                 .name("Yaroslav's Client")
                 .secretKey("secret")
                 .publicKey("public")
+                .roles(new HashSet<>(Arrays.asList(ClientRoles.ADMIN, ClientRoles.CLIENT)))
                 .build();
 
         Client secondClient = Client.builder()
                 .uuid(uuidGenerator.generate())
                 .name("Nikita's Client")
+                .secretKey("secret1")
+                .publicKey("public1")
+                .roles(new HashSet<>(Collections.singletonList(ClientRoles.CLIENT)))
                 .build();
         Flux
                 .just(
@@ -44,7 +51,7 @@ public class MockDataInitializer {
                         secondClient
                 )
                 .subscribe(user -> repository
-                        .findById(user.getUuid())
+                        .findByPublicKey(user.getPublicKey())
                         .switchIfEmpty(repository.save(user))
                         .subscribe(saved -> log.debug("Test user was added: " + saved)));
 
