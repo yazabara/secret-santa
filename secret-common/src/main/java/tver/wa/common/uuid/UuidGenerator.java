@@ -1,4 +1,4 @@
-package tver.wa.common;
+package tver.wa.common.uuid;
 
 import org.springframework.stereotype.Component;
 

@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 import tver.wa.client.exceptions.ClientNotFoundException;
 import tver.wa.client.repositories.ClientRepository;
 import tver.wa.client.model.Client;
-import tver.wa.common.UuidGenerator;
+import tver.wa.common.uuid.UuidGenerator;
 import tver.wa.client.services.ClientService;
 
 import java.util.UUID;

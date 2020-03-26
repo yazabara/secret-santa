@@ -1,4 +1,4 @@
-package tver.wa.events.model.github;
+package tver.wa.santa.model.github;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

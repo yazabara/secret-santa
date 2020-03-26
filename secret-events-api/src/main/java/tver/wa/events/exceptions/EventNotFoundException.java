@@ -1,4 +1,4 @@
-package tver.wa.client.exceptions;
+package tver.wa.events.exceptions;
 
 public class EventNotFoundException extends EventHandledException {
 

@@ -28,7 +28,8 @@ public class EventRouteHandler extends BaseRouteHandler {
 
     Mono<ServerResponse> createEvent(@Valid ServerRequest serverRequest) {
         return jsonResponse(
-                eventService.create(ServerRequestUtils.publicKey(serverRequest).get(), serverRequest.bodyToMono(Event.class)),
+                // TODO
+                eventService.create(null, serverRequest.bodyToMono(Event.class)),
                 Event.class
         );
     }

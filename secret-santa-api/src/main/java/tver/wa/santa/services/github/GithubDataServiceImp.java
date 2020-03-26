@@ -1,11 +1,11 @@
-package tver.wa.events.services.github;
+package tver.wa.santa.services.github;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import tver.wa.events.model.github.GithubCommitsData;
-import tver.wa.events.model.github.GithubVersion;
+import tver.wa.santa.model.github.GithubCommitsData;
+import tver.wa.santa.model.github.GithubVersion;
 
 @Service
 @RequiredArgsConstructor

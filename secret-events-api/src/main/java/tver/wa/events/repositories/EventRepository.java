@@ -1,4 +1,4 @@
-package tver.wa.client.repositories;
+package tver.wa.events.repositories;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;

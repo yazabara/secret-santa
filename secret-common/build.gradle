@@ -7,15 +7,24 @@ ext {
     set('springCloudVersion', "Greenwich.SR3")
 }
 
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
 dependencies {
     compile 'org.springframework:spring-context'
     compile 'org.springframework:spring-webflux'
 
-
     compile 'org.apache.commons:commons-lang3'
     compile 'org.apache.commons:commons-collections4:4.0'
 
+    compile 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {

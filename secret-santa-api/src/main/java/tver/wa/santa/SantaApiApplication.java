@@ -1,4 +1,4 @@
-package tver.wa.common;
+package tver.wa.santa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
