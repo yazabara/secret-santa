@@ -5,10 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import tver.wa.events.exceptions.EventNotFoundException;
-import tver.wa.events.repositories.EventRepository;
 import tver.wa.common.uuid.UuidGenerator;
+import tver.wa.events.exceptions.EventNotFoundException;
 import tver.wa.events.model.Event;
+import tver.wa.events.repositories.EventRepository;
 import tver.wa.events.services.EventService;
 
 import java.util.UUID;

@@ -9,7 +9,6 @@ import reactor.core.publisher.Mono;
 import tver.wa.events.model.Event;
 import tver.wa.events.services.EventService;
 import tver.wa.web.BaseRouteHandler;
-import tver.wa.web.ServerRequestUtils;
 
 import javax.validation.Valid;
 

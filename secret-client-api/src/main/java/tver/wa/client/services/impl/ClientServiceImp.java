@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tver.wa.client.exceptions.ClientNotFoundException;
-import tver.wa.client.repositories.ClientRepository;
 import tver.wa.client.model.Client;
-import tver.wa.common.uuid.UuidGenerator;
+import tver.wa.client.repositories.ClientRepository;
 import tver.wa.client.services.ClientService;
+import tver.wa.common.uuid.UuidGenerator;
 
 import java.util.UUID;
 

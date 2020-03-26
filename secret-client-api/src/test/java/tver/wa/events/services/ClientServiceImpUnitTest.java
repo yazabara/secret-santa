@@ -10,8 +10,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import tver.wa.client.model.Client;
-import tver.wa.client.services.impl.ClientServiceImp;
 import tver.wa.client.repositories.ClientRepository;
+import tver.wa.client.services.impl.ClientServiceImp;
 
 import java.util.Arrays;
 import java.util.UUID;
