@@ -7,7 +7,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tver.wa.client.exceptions.EventNotFoundException;
 import tver.wa.client.repositories.EventRepository;
+import tver.wa.common.UuidGenerator;
 import tver.wa.events.model.Event;
+import tver.wa.events.services.EventService;
 
 import java.util.UUID;
 
@@ -16,7 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EventServiceImp implements EventService {
 
-    private final UUIDGenerator uuidGenerator;
+    private final UuidGenerator uuidGenerator;
     private final EventRepository eventRepository;
     private final ClientService clientService;
 

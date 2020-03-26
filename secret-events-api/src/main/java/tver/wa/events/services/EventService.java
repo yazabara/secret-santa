@@ -3,6 +3,7 @@ package tver.wa.events.services;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tver.wa.events.model.Event;
 
 import java.util.UUID;
 

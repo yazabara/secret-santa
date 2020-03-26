@@ -12,12 +12,10 @@ dependencies {
     compile 'org.springframework:spring-webflux'
 
 
-    compile 'org.projectlombok:lombok'
     compile 'org.apache.commons:commons-lang3'
     compile 'org.apache.commons:commons-collections4:4.0'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {
