@@ -1,4 +1,4 @@
-package tver.wa.web;
+package tver.wa.common.web;
 
 import org.reactivestreams.Publisher;
 import org.springframework.http.MediaType;

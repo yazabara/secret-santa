@@ -1,4 +1,4 @@
-package tver.wa.web;
+package tver.wa.common.web;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.collections4.CollectionUtils;

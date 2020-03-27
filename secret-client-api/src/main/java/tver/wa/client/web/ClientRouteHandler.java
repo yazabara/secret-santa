@@ -7,9 +7,9 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import tver.wa.client.model.Client;
 import tver.wa.client.services.ClientService;
-import tver.wa.web.BaseRouteHandler;
+import tver.wa.common.web.BaseRouteHandler;
 
-import static tver.wa.web.ServerRequestUtils.uuid;
+import static tver.wa.common.web.ServerRequestUtils.uuid;
 
 
 @Component

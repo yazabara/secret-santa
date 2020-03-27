@@ -8,11 +8,11 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import tver.wa.events.model.Event;
 import tver.wa.events.services.EventService;
-import tver.wa.web.BaseRouteHandler;
+import tver.wa.common.web.BaseRouteHandler;
 
 import javax.validation.Valid;
 
-import static tver.wa.web.ServerRequestUtils.uuid;
+import static tver.wa.common.web.ServerRequestUtils.uuid;
 
 @Slf4j
 @Component

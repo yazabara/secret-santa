@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import tver.wa.santa.model.github.GithubVersion;
 import tver.wa.santa.services.github.GithubDataService;
-import tver.wa.web.BaseRouteHandler;
+import tver.wa.common.web.BaseRouteHandler;
 
 @Component
 @RequiredArgsConstructor
