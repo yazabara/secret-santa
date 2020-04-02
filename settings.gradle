@@ -1,3 +1,3 @@
 rootProject.name = 'secret-santa'
 
-include 'config-server', 'events-api'
+include 'config-server', 'secret-common', 'secret-santa-api', 'secret-client-api', 'secret-events-api'

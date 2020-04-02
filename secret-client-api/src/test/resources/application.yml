@@ -1,0 +1,18 @@
+# logging configuration
+logging:
+  level:
+    tver.wa: 'DEBUG'
+
+# application port
+server:
+  port: 10902
+
+# spring configuration
+spring:
+  main:
+    banner-mode: 'OFF'
+  data:
+    mongodb:
+      name: secret-santa-test
+      host: localhost
+      port: 0
