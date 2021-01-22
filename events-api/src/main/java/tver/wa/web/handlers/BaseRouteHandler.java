@@ -22,10 +22,23 @@ public class BaseRouteHandler {
         );
     }
 
+    protected static <T> Mono<ServerResponse> jsonResponse(T monoObject) {
+        return defaultJsonResponse(
+                monoObject
+        );
+    }
+
     private static <T> Mono<ServerResponse> defaultJsonResponse(Publisher<T> publisher, Class<T> tClass) {
         return ServerResponse
                 .ok()
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(publisher, tClass);
+    }
+
+    private static <T> Mono<ServerResponse> defaultJsonResponse(T body) {
+        return ServerResponse
+                .ok()
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .syncBody(body);
     }
 }

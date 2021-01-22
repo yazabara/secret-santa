@@ -6,10 +6,10 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import tver.wa.model.secret.santa.Client;
-import tver.wa.web.handlers.BaseRouteHandler;
 import tver.wa.services.client.ClientService;
+import tver.wa.web.handlers.BaseRouteHandler;
 
-import static tver.wa.web.utils.ServerRequestUtils.uuid;
+import static tver.wa.web.utils.ServerRequestUtils.*;
 
 @Component
 @RequiredArgsConstructor
@@ -32,14 +32,20 @@ class ClientRouteHandler extends BaseRouteHandler {
     }
 
     Mono<ServerResponse> create(ServerRequest serverRequest) {
-        return Mono.empty();
+        return bodyFromResponse(serverRequest, Client.class)
+                .flatMap(clientService::create)
+                .flatMap(BaseRouteHandler::jsonResponse);
     }
 
     Mono<ServerResponse> update(ServerRequest serverRequest) {
-        return Mono.empty();
+        return bodyFromResponse(serverRequest, Client.class)
+                .flatMap(clientService::update)
+                .flatMap(BaseRouteHandler::jsonResponse);
     }
 
     Mono<ServerResponse> delete(ServerRequest serverRequest) {
-        return Mono.empty();
+        return uuidMono(serverRequest)
+                .flatMap(clientService::delete)
+                .flatMap(BaseRouteHandler::jsonResponse);
     }
 }
